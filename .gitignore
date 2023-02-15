@@ -1,7 +1,2 @@
-/.idea/.gitignore
-/.idea/flappy_bird_ai.iml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/inspectionProfiles/profiles_settings.xml
-/.idea/inspectionProfiles/Project_Default.xml
-/.idea/vcs.xml
+/.idea
+**/*/__pycache__/
