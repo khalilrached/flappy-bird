@@ -7,7 +7,7 @@ this project was divided on 2 section [game-dev](#Game-dev) and [AI-training](#A
 using `pygame` library to create 2d object. 
 
 ### AI training
-using `tensor flow` to create the neural-network and train the model to beat this game
+using `tensorflow` to create the neural-network and train the model to beat this game
 
 ### install / run
 
