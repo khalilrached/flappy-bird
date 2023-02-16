@@ -23,8 +23,8 @@ class PilarBuffer:
 
     def draw(self):
         for pilar in self.buffer:
-            pygame.draw.rect(self.display, self.__COLOR, pilar.upper_rect)
-            pygame.draw.rect(self.display, self.__COLOR, pilar.lower_rect)
+            pygame.draw.rect(self.display, pilar.color, pilar.upper_rect)
+            pygame.draw.rect(self.display, pilar.color, pilar.lower_rect)
 
     def rect_list(self):
         list = []
@@ -41,6 +41,11 @@ class PilarBuffer:
         self.buffer.remove(pilar)
         self.buffer.append(Pilar(self.screen_width, self.screen_height,
                                         self.pilar_per_display * self.space_between))
+
+    def get_first(self,x_pos):
+        for pilar in self.buffer:
+            if pilar.lower_rect.x + pilar.lower_rect.w > x_pos:
+                return pilar
 
     def move(self):
         for pilar in self.buffer:

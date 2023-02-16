@@ -1,62 +1,70 @@
 import os
 import sys
-
 import pygame
-
 from lib import *
-from lib import Player
 
 
+def check_collision():
+    collided = False
+    #   if player.boundaries()["x-boundaries"][1] > buffer.buffer[0].boundaries()["x-boundaries"][0]:
+    #   collided = True
 
 
-def main():
-    # initialize it
-    pygame.init()
-    # configurations
-    frames_per_second = 60
-    window_height = 720
-    window_width = 1280
-
-    # colors
+class Game:
+    FPS = 60
     WHITE = (255, 255, 255)
+    PILLARS_COUNT = 6
+    PILLARS_DELTA_SPEED = 0.005
+    SPAWN_POSITION_X = 300
 
-    # creating window
-    display = pygame.display.set_mode((window_width, window_height))
-    # creating our frame regulator
-    clock = pygame.time.Clock()
-    buffer = pb(display, window_width, window_height, 6)
+    def __init__(self, window_height, window_width):
+        pygame.init()
+        self.window_height = window_height
+        self.window_width = window_width
+        self.display = pygame.display.set_mode((self.window_width, self.window_height))
+        self.clock = pygame.time.Clock()
+        self.pillars = PilarBuffer(self.display, self.window_width, self.window_height, self.PILLARS_COUNT)
+        self.players = [Player(self.display, self.SPAWN_POSITION_X, self.window_height / 2)]
+        self.__player_front_x = self.SPAWN_POSITION_X+self.players[0].player_rect.w
+        self.__next_pillar = self.pillars.get_first(self.__player_front_x)
+        self.score = 0
 
-    player = Player(display, 300, window_height / 2)
+    def animate(self):
+        self.pillars.increase_speed(self.PILLARS_DELTA_SPEED)
+        self.pillars.move()
+        for p in self.players:
+            p.animate()
 
-    def animate():
-        buffer.increase_speed(0.005)
-        buffer.move()
-        player.animate()
-
-    jump = False
-
-    def status():
-        os.system("cls")
-        print(f"[ jump: {jump}, pilar_speed: {buffer.speed} ]")
-
-    # forever loop
-    while True:
-        # frame Drawing
-        display.fill(WHITE)
-        # event loop
+    def event_loop(self):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    player.jump()
-                    jump = True
+                    for p in self.players:
+                        p.jump()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        # frame clock ticking
-        buffer.draw()
-        player.draw()
-        animate()
-        status()
-        jump = False
+
+    def status(self):
+        os.system("cls")
+        print(f"[ pilar_speed: {self.pillars.speed}, score: {self.score} ,buffer_size: {len(self.pillars.buffer)} ]")
+
+    def __calculate_score(self):
+        cur_next_pillar = self.pillars.get_first(self.__player_front_x)
+        if cur_next_pillar != self.__next_pillar:
+            self.__next_pillar = cur_next_pillar
+            self.score += 1
+
+    def draw(self):
+        # fill window with white
+        self.display.fill(self.WHITE)
+        # event loop
+        self.event_loop()
+        self.pillars.draw()
+        self.players[0].draw()
+        self.animate()
+        self.__calculate_score()
+        self.status()
         pygame.display.update()
-        clock.tick(frames_per_second)
+        # frame clock ticking
+        # clock.tick(frames_per_second)

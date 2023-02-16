@@ -18,5 +18,11 @@ class Player:
     def draw(self):
         pygame.draw.rect(self.display, self.__COLOR, self.player_rect)
 
+    def boundaries(self):
+        return {
+            "x-boundaries": [self.player_rect.x, self.player_rect.x + self.player_rect.w],
+            "y-boundaries": [self.player_rect.y, self.player_rect.y + self.player_rect.h]
+        }
+
     def animate(self):
         self.player_rect = self.gravity.apply()
