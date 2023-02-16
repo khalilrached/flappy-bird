@@ -7,7 +7,7 @@ this project was divided on 2 section [game-dev](#Game-dev) and [AI-training](#A
 using `pygame` library to create 2d object. 
 
 ### AI training
-using `tensorflow` to create the neural-network and train the model to beat this game
+using `neat-python` to create the neural-network and train the model to beat this game
 
 ### install / run
 
@@ -35,4 +35,4 @@ using `tensorflow` to create the neural-network and train the model to beat this
 ### help 
 use help command to see all the commands
 
-### this project created for fun and to play with tensorflow library.
+### this project created for fun and to play with tensorflow and neat library.

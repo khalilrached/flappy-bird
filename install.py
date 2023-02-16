@@ -3,7 +3,7 @@ import pip
 import platform
 
 
-package_list = ["tensorflow","pygame"]
+package_list = ["neat-python","pygame"]
 
 PYTHON_PATH = ""
 
