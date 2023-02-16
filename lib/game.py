@@ -55,13 +55,23 @@ class Game:
             self.__next_pillar = cur_next_pillar
             self.score += 1
 
+    def isOver(self) -> bool:
+        return len(self.players) == 0
+
+    def restart(self):
+        self = self.__init__(self.window_height,self.window_width)
+
     def draw(self):
         # fill window with white
         self.display.fill(self.WHITE)
+
         # event loop
         self.event_loop()
         self.pillars.draw()
-        self.players[0].draw()
+        for p in self.players:
+            p.draw()
+            if p.isCollided(self.__next_pillar):
+                self.players.remove(p)
         self.animate()
         self.__calculate_score()
         self.status()
