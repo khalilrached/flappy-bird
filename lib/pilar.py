@@ -6,7 +6,7 @@ class Pilar:
         # the distance between the upper pilar and the lower pilar
         # should be between 15%~30% of screen_height
         # gap center should be
-        gap_height_percent = 0.15 + random() * 0.15
+        gap_height_percent = 0.25 + random() * 0.10
         gap_width_percent = 0.05
         self.gap_width = gap_width_percent * screen_width
         self.gap_height = gap_height_percent * screen_height
